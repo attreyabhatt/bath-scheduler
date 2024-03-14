@@ -1,1 +1,1 @@
-Bath Scheduler - For people who don't like take baths daily.
+Bath Scheduler - For people who don't like taking baths daily.
