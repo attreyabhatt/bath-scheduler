@@ -6,6 +6,8 @@ const app = express();
 const port = 3000;
 const weatherAPI = "";
 
+app.use(express.static("public"));
+
 // TODO:Change the IP to actual IP
 async function getCity(ip) {
   let test_ip = "45.251.234.48";
@@ -22,9 +24,13 @@ async function getTemperature(city) {
     weatherAPI;
 
   const result = await axios.get(url);
+  console.log(result.data);
   let currentTemperature = result.data.main.temp;
   currentTemperature = Math.round(currentTemperature - 273.15);
-  return currentTemperature;
+  let weather = [];
+  weather.push(currentTemperature);
+  weather.push(result.data.main.humidity);
+  return weather;
 }
 
 function calBathTimes(currentTemperature) {
@@ -59,22 +65,22 @@ function getNextWeek() {
         weekName.push("Sunday");
         break;
       case 1:
-        weekName.push("Mond");
+        weekName.push("Monday");
         break;
       case 2:
-        weekName.push("Tue");
+        weekName.push("Tuesday");
         break;
       case 3:
-        weekName.push("Wed");
+        weekName.push("Wednesday");
         break;
       case 4:
-        weekName.push("Thur");
+        weekName.push("Thurday");
         break;
       case 5:
-        weekName.push("Fri");
+        weekName.push("Friday");
         break;
       case 6:
-        weekName.push("Sat");
+        weekName.push("Saturday");
         break;
       default:
         break;
@@ -98,11 +104,15 @@ function calBathDays(nextDays, bathTimes) {
 }
 
 app.get("/", async (req, res) => {
-  let city = await getCity(req.ip);
-  let currentTemperature = await getTemperature(city);
-  let bathTimes = calBathTimes(currentTemperature);
-  // let currentTemperature = 27;
-  // let bathTimes = 3;
+  // let city = await getCity(req.ip);
+  // let weather = await getTemperature(city);
+  // let bathTimes = calBathTimes(weather[0]);
+  // let humidity = weather[1];
+  // let currentTemperature = weather[0];
+  let currentTemperature = 27;
+  let bathTimes = 3;
+  let humidity = 1;
+  let city = "Kolkata";
   let nextDays = getNextWeek();
   let bathDays = calBathDays(nextDays, bathTimes);
 
@@ -110,6 +120,8 @@ app.get("/", async (req, res) => {
     currentTemperature,
     nextDays,
     bathDays,
+    humidity,
+    city,
   });
 });
 

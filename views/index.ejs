@@ -4,10 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <p><%= currentTemperature %></p>
-    <p><%= nextDays %></p>
-    <p><%= bathDays %></p>
+    <section class="webmd">
+      <div class="webmd-container">
+        <div class="webmd-quote">
+          <p>
+            For many people, showering two to three times a week is enough and may be
+            even better to maintain good health. It depends in part on your
+            lifestyle.
+          </p>
+        </div>
+        <div class="webmd-author">-<a href="">WebMD</a></div>
+      </div>
+    </section>
+
+    <section class="weather">
+      <div class="temperature card">
+        <h2><%= city %></h2>
+        <p>Temperature <%= currentTemperature %></p>
+        <p>Humidity <%= humidity %></p>
+      </div>
+      <div class="calender">
+        <ul class="days">
+          <% for(let i=0;i<7;i++){ %>
+          <li><%= nextDays[i] %></li>
+          <%}%>
+        </ul>
+        <ul class="daybath">
+          <% for(let i=0;i<7;i++){ %>
+          <li>
+            <% if(bathDays[i] == true){ %>
+            <img src="/images/bath.png" height="64" /> <%} else{ %>
+            <img src="/images/sun.png" height="64" /> <%} %>
+          </li>
+          <%}%>
+        </ul>
+      </div>
+    </section>
+
+    <!-- <p><%= currentTemperature %></p>
+    
+    <p><%= bathDays %></p> -->
   </body>
 </html>
